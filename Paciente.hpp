@@ -1,36 +1,52 @@
 #pragma once
 #include <iostream>
-using namespace std;
+#include <string>
 
+using namespace std;
 
 class Paciente {
 private:
-
-    string id,TipoDolor,Nombre;
-    string servicio = "";
-    int edad,Dolor,Trauma,SintomasNeurologicos,RequiereCirugia;
-    float Temperatura;
-    
-
-    
+    string id;
+    string nombre;
+    int edad;
+    float temperatura;
+    int presionArterial;
+    int dolor;
+    string tipoDolor;
+    int trauma;                  
+    int sintomasNeurologicos;    
+    int requiereCirugia;         
+    int diasHospitalizacion;
+    string servicio;             
 
 public:
-    Paciente(string id,string Nombre,int edad, string TipoDolor, int Dolor, int Trauma, int SintomasNeurologicos, int RequiereCirugia);
+   
+    Paciente(string id, string nombre, int edad, float temperatura, 
+             int presionArterial, int dolor, string tipoDolor, 
+             int trauma, int sintomasNeurologicos, int requiereCirugia, 
+             int diasHospitalizacion);
+
     ~Paciente();
 
-    string getID();
-    string getNombre();
-    string getTipoDolor();
-    string getServicio();
-    int getEdad();
-    int getDolor();
-    int getTrauma();
-    int getSintomasNeurologicos();
-    int getRequiereCirugia();
-    string setServicio(string Servicio);
+    // Getters
+    string getId() const;
+    string getNombre() const;
+    int getEdad() const;
+    float getTemperatura() const;
+    int getPresionArterial() const;
+    int getDolor() const;
+    string getTipoDolor() const;
+    int getTrauma() const;
+    int getSintomasNeurologicos() const;
+    int getRequiereCirugia() const;
+    int getDiasHospitalizacion() const;
+    string getServicio() const;
 
-    
-    
+    // Setter
+    void setServicio(const string& nuevoServicio);
+
+    // Visualizacion
+    void mostrar() const;
 };
 
 

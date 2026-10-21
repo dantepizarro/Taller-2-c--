@@ -1,49 +1,85 @@
 #include "Paciente.hpp"
 #include <iostream>
+
 using namespace std;
 
-
-Paciente::Paciente(string id, string Nombre, int edad, string TipoDolor, int Dolor, int Trauma, int SintomasNeurogologicos, int RequiereCirugia) {}
+Paciente::Paciente(string id, string Nombre, int edad, float Temperatura, int presionArterial, int Dolor, string TipoDolor, int Trauma, int SintomasNeurologicos, int RequiereCirugia, int diasHospitalizacion) {
+    this->id = id;
+    this->nombre = Nombre;
+    this->edad = edad;
+    this->temperatura
+     = Temperatura;
+    this->presionArterial = presionArterial;
+    this->dolor = Dolor;
+    this->tipoDolor = TipoDolor;
+    this->trauma = Trauma;
+    this->sintomasNeurologicos = SintomasNeurologicos;
+    this->requiereCirugia = RequiereCirugia;
+    this->diasHospitalizacion = diasHospitalizacion;
+    this->servicio = "Sin Asignar";
+}
 
 Paciente::~Paciente() {}
 
-string Paciente::getID() {
+string Paciente::getId() const {
     return id;
 }
 
-string Paciente::getNombre() {
-    return Nombre;
+string Paciente::getNombre() const {
+    return nombre;
 }
 
-string Paciente::getTipoDolor(){
-    return TipoDolor;
-}
-
-string Paciente::getServicio(){
-    return servicio;
-}
-
-int Paciente::getEdad(){
+int Paciente::getEdad() const {
     return edad;
 }
 
-int Paciente::getDolor(){
-    return Dolor;
+float Paciente::getTemperatura() const {
+    return temperatura;
 }
 
-int Paciente::getTrauma(){
-    return Trauma;
+int Paciente::getPresionArterial() const {
+    return presionArterial;
 }
 
-int Paciente::getSintomasNeurologicos(){
-    return SintomasNeurologicos;
+int Paciente::getDolor() const {
+    return dolor;
 }
 
-int Paciente::getRequiereCirugia(){
-    return RequiereCirugia;
+string Paciente::getTipoDolor() const {
+    return tipoDolor;
 }
 
-string Paciente::setServicio(string Servicio){
-    this->servicio = Servicio;
+int Paciente::getTrauma() const {
+    return trauma;
 }
+
+int Paciente::getSintomasNeurologicos() const {
+    return sintomasNeurologicos;
+}
+
+int Paciente::getRequiereCirugia() const {
+    return requiereCirugia;
+}
+
+int Paciente::getDiasHospitalizacion() const {
+    return diasHospitalizacion;
+}
+
+string Paciente::getServicio() const {
+    return servicio;
+}
+
+void Paciente::setServicio(const string& nuevoServicio) {
+    servicio = nuevoServicio;
+}
+
+void Paciente::mostrar() const {
+    cout << "ID: " << id
+         << " | Nombre: " << nombre
+         << " | Edad: " << edad
+         << " | Temp: " << temperatura << "°C"
+         << " | Dolor: " << dolor << " (" << tipoDolor << ")"
+         << " | Servicio: " << servicio << endl;
+}
+
 
