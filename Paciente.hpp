@@ -7,6 +7,7 @@ class Paciente {
 private:
 
     string id,TipoDolor,Nombre;
+    string servicio = "";
     int edad,Dolor,Trauma,SintomasNeurologicos,RequiereCirugia;
     float Temperatura;
     
@@ -14,18 +15,19 @@ private:
     
 
 public:
-    Paciente(string id,string Nombre, int edad, string TipoDolor, int Dolor, int Trauma, int SintomasNeurologicos, int RequiereCirugia);
+    Paciente(string id,string Nombre,int edad, string TipoDolor, int Dolor, int Trauma, int SintomasNeurologicos, int RequiereCirugia);
     ~Paciente();
 
     string getID();
     string getNombre();
     string getTipoDolor();
+    string getServicio();
     int getEdad();
     int getDolor();
     int getTrauma();
     int getSintomasNeurologicos();
     int getRequiereCirugia();
-
+    string setServicio(string Servicio);
 
     
     

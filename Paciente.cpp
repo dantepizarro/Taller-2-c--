@@ -19,6 +19,10 @@ string Paciente::getTipoDolor(){
     return TipoDolor;
 }
 
+string Paciente::getServicio(){
+    return servicio;
+}
+
 int Paciente::getEdad(){
     return edad;
 }
@@ -39,5 +43,7 @@ int Paciente::getRequiereCirugia(){
     return RequiereCirugia;
 }
 
-
+string Paciente::setServicio(string Servicio){
+    this->servicio = Servicio;
+}
 
