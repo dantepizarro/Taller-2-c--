@@ -3,10 +3,7 @@
 
 using namespace std;
 
-Paciente::Paciente(string id, string Nombre, int edad, float Temperatura, 
-                   int presionArterial, int Dolor, string TipoDolor, 
-                   int Trauma, int SintomasNeurologicos, int RequiereCirugia, 
-                   int diasHospitalizacion) {
+Paciente::Paciente(string id, string Nombre, int edad, float Temperatura, int presionArterial, int Dolor, string TipoDolor, int Trauma, int SintomasNeurologicos, int RequiereCirugia, int diasHospitalizacion) {
     this->id = id;
     this->nombre = Nombre;
     this->edad = edad;
@@ -24,66 +21,65 @@ Paciente::Paciente(string id, string Nombre, int edad, float Temperatura,
 
 Paciente::~Paciente() {}
 
-string Paciente::getId() {
+string Paciente::getId() const {
     return id;
 }
 
-string Paciente::getNombre() {
-    return Nombre;
+string Paciente::getNombre() const {
+    return nombre;
 }
 
-int Paciente::getEdad() {
+int Paciente::getEdad() const {
     return edad;
 }
 
-float Paciente::getTemperatura() {
-    return Temperatura;
+float Paciente::getTemperatura() const {
+    return temperatura;
 }
 
-int Paciente::getPresionArterial() {
+int Paciente::getPresionArterial() const {
     return presionArterial;
 }
 
-int Paciente::getDolor() {
-    return Dolor;
+int Paciente::getDolor() const {
+    return dolor;
 }
 
-string Paciente::getTipoDolor() {
-    return TipoDolor;
+string Paciente::getTipoDolor() const {
+    return tipoDolor;
 }
 
-int Paciente::getTrauma() {
-    return Trauma;
+int Paciente::getTrauma() const {
+    return trauma;
 }
 
-int Paciente::getSintomasNeurologicos() {
-    return SintomasNeurologicos;
+int Paciente::getSintomasNeurologicos() const {
+    return sintomasNeurologicos;
 }
 
-int Paciente::getRequiereCirugia() {
-    return RequiereCirugia;
+int Paciente::getRequiereCirugia() const {
+    return requiereCirugia;
 }
 
-int Paciente::getDiasHospitalizacion() {
+int Paciente::getDiasHospitalizacion() const {
     return diasHospitalizacion;
 }
 
-string Paciente::getServicio() {
+string Paciente::getServicio() const {
     return servicio;
 }
 
-void Paciente::setServicio(string servicio) {
-    this->servicio = servicio;
+void Paciente::setServicio(const string& nuevoServicio) {
+    servicio = nuevoServicio;
 }
 
-void Paciente::mostrar() {
+void Paciente::mostrar() const {
     cout << "ID: " << id
-         << " | Nombre: " << Nombre
+         << " | Nombre: " << nombre
          << " | Edad: " << edad
-         << " | Temp: " << Temperatura << "°C"
-         << " | Dolor: " << Dolor << " (" << TipoDolor << ")"
+         << " | Temp: " << temperatura << "°C"
+         << " | Dolor: " << dolor << " (" << tipoDolor << ")"
          << " | Servicio: " << servicio << endl;
 }
-
 
 

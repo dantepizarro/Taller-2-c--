@@ -20,7 +20,6 @@ void lectura(ColaPacientes &cola) {
     while (getline(archivo, linea)) {
         if (linea.empty()) continue;
 
-        // Limpiar retorno de carro (\r) en archivos con formato Windows
         if (!linea.empty() && linea.back() == '\r') {
             linea.pop_back();
         }
@@ -28,7 +27,6 @@ void lectura(ColaPacientes &cola) {
         stringstream ss(linea);
         string token;
         
-        // Variables para los 11 campos del Taller 2
         string id, nombre, tipoDolor;
         int edad = 0, presionArterial = 0, dolor = 0, diasHospitalizacion = 0;
         float temperatura = 0.0f;
@@ -63,25 +61,21 @@ void lectura(ColaPacientes &cola) {
             columna++;
         }
 
-        // Verificar que se procesaron exactamente los 11 campos requeridos
         if (!lineaValida || columna < 11) {
             cout << "Advertencia: Linea invalida u omitida por formato/datos incompletos." << endl;
             continue;
         }
 
-        // Validaciones de rangos y coherencia
         if (edad < 0 || dolor < 0 || dolor > 10 || temperatura < 30.0f) {
             cout << "Advertencia: Datos fuera de rango para el paciente " << id << ". Se omite la linea." << endl;
             continue;
         }
 
-        // Comprobar ID duplicado en la Cola
         if (cola.existeID(id)) {
             cout << "Advertencia: ID duplicado (" << id << "), se omite la linea." << endl;
             continue;
         }
 
-        // Crear instancia del paciente con sus 11 atributos e insertarlo a la Cola
         Paciente* nuevoPaciente = new Paciente(
             id, nombre, edad, temperatura, presionArterial, dolor, tipoDolor,
             traumaInt != 0, sintomasInt != 0, cirugiaInt != 0, diasHospitalizacion
@@ -121,11 +115,8 @@ int main() {
     ListaServicios listaServicios; 
     PilaHistorial historial;
 
-    // Cargar pacientes desde el archivo de texto
     lectura(cola);        
 
-    cout << "\n=== ESTADO INICIAL DE LA COLA DE ESPERA ===" << endl;
-    cola.mostrar(); 
 
     int opcion = 0;
     while (opcion != 4) {
