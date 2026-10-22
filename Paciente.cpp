@@ -74,12 +74,16 @@ void Paciente::setServicio(const string& nuevoServicio) {
 }
 
 void Paciente::mostrar() const {
-    cout << "ID: " << id
-         << " | Nombre: " << nombre
-         << " | Edad: " << edad
-         << " | Temp: " << temperatura << "°C"
-         << " | Dolor: " << dolor << " (" << tipoDolor << ")"
-         << " | Servicio: " << servicio << endl;
+    cout << "ID: " << id << endl;
+    cout << "Nombre: " << nombre << endl;
+    cout << "Edad: " << edad << endl;
+    cout << "Temperatura: " << temperatura << endl;
+    cout << "Dolor: " << dolor << endl;
+    cout << "TipoDolor: " << tipoDolor << endl;
+    cout << "Trauma: " << trauma << endl;
+    cout << "SintomasNeurologicos: " << sintomasNeurologicos << endl;
+    cout << "RequiereCirugia: " << requiereCirugia << endl;
+    cout << "DiasHospitalizacion: " << diasHospitalizacion << endl;
 }
 
 

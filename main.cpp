@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include "ColaPacientes.hpp"
 #include "ListaServicios.hpp"
-#include "PilaHistorial.hpp"
+
 
 using namespace std;
 
@@ -113,7 +113,7 @@ void mostrarDepartamentos(ListaServicios& listaServicios, int opcion) {
 int main() {
     ColaPacientes cola;  
     ListaServicios listaServicios; 
-    PilaHistorial historial;
+    
 
     lectura(cola);        
 
@@ -123,40 +123,29 @@ int main() {
         cout << "\n=== HOSPITAL MARMAJA ===" << endl;
         cout << "1. Atender pacientes" << endl;
         cout << "2. Ver departamentos" << endl;
-        cout << "3. Revisar historial de pacientes" << endl;
+        cout << "3. Buscar pacientes" << endl;
         cout << "4. Salir" << endl;
         cout << "Seleccionar opcion: ";
         cin >> opcion;
 
         switch (opcion) {
             case 1: {
-                cola.mostrar();
-                int cantidad;
-                cout << "Indique la cantidad de pacientes a atender: ";
-                cin >> cantidad;
-
-                for (int i = 0; i < cantidad; i++) {
-                    Paciente* pacienteAtendido = cola.desencolar();
-                    if (pacienteAtendido != nullptr) {
-                        pacienteAtendido->mostrar();
-                        cout << "Paciente enviado a: " + pacienteAtendido->getServicio() << endl;
-                        listaServicios.insertar(pacienteAtendido->getServicio(), pacienteAtendido);
-                        
-                        string evento = "ID: " + pacienteAtendido->getId() +
-                                       " | Nombre: " + pacienteAtendido->getNombre() + 
-                                       " | Edad: " + to_string(pacienteAtendido->getEdad()) + 
-                                       " | Departamento: " + pacienteAtendido->getServicio(); 
-                        historial.apilar(evento);
-                    } else {  
-                        cout << "No hay mas pacientes para atender." << endl;
-                        break;
-                    }
+                cout << "=== ATENDIENDO PACIENTES ===" << endl;
+                Paciente* pacienteAtendido = cola.desencolar();
+                if (pacienteAtendido != nullptr) {
+                    pacienteAtendido->mostrar();
+                    
+                    listaServicios.insertar(pacienteAtendido->getServicio(), pacienteAtendido); 
+                    
+                } else {  
+                    cout << "No hay mas pacientes para atender." << endl;
+                    break;
                 }
-                break;
             }
+            break;
+            
             case 2: {
-                int opcionDepartamento = 0;
-                cout << "\n==== DEPARTAMENTOS Y SERVICIOS ===" << endl;
+                cout << "\n==== ESTADOS DE LOS DEPARTAMENTOS ===" << endl;
                 cout << "1. Urgencias" << endl;
                 cout << "2. Medicina General" << endl;
                 cout << "3. Cardiologia" << endl;
@@ -166,15 +155,13 @@ int main() {
                 cout << "7. Pediatria" << endl;
                 cout << "8. Hospitalizacion" << endl;
                 cout << "Seleccione un departamento (1-8): ";
-                cin >> opcionDepartamento;
+                
 
-                mostrarDepartamentos(listaServicios, opcionDepartamento);
+                
                 break;
             }
             case 3: {
-                cout << "\n=== HISTORIAL DE ULTIMAS ATENCIONES DEL HOSPITAL ===" << endl;
-                historial.mostrarHistorial();
-                break;
+                
             }
             case 4: {
                 cout << "Saliendo del sistema..." << endl;
