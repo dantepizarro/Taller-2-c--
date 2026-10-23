@@ -66,3 +66,119 @@ NodoAVL* ArbolAVL::Izquierda(NodoAVL* x) {
 
     return y;
 }
+
+NodoAVL* ArbolAVL::insertar(NodoAVL* nodo, Paciente* paciente){
+    if(paciente == nullptr){
+        return nodo;
+    }
+
+    if(nodo == nullptr){
+        return new NodoAVL(paciente);
+    }
+
+    string idPaciente = paciente->getId();
+    string idNodo = nodo->paciente->getId();
+
+    if(idPaciente < idNodo){
+        nodo->izquierdo = insertar(nodo->izquierdo, paciente);
+    }else if(idPaciente > idNodo){
+        nodo->derecho = insertar(nodo->derecho, paciente);
+    }else{
+        return nodo;
+    }
+
+    actualizarAltura(nodo);
+    int balance = getBalance(nodo);
+
+    if(balance >1 && idPaciente < nodo->izquierdo->paciente->getId()){
+        return Derecha(nodo);
+    }
+
+    if(balance <-1 && idPaciente > nodo->derecho->paciente->getId()){
+        return Izquierda(nodo);
+    }
+
+    if(balance < -1 && idPaciente < nodo->derecho->paciente->getId()){
+        nodo->derecho = Derecha(nodo->derecho);
+        return Izquierda(nodo);
+    }
+
+    if(balance > 1 && idPaciente > nodo->izquierdo->paciente->getId()){
+        nodo->izquierdo = Izquierda(nodo->izquierdo);
+        return Derecha(nodo);
+    }
+
+    return nodo;
+}
+
+void ArbolAVL::insertar(Paciente* paciente){
+    raiz = insertar(raiz, paciente);
+}
+
+Paciente* ArbolAVL::buscar(std::string id){
+    NodoAVL* actual = raiz;
+    
+    while(actual != nullptr){
+        string idActual = actual->paciente->getId();
+        if(id == idActual){
+            return actual->paciente;
+        } else if(id < idActual){
+            actual = actual->izquierdo;
+        } else {
+            actual = actual->derecho;
+        }
+    }
+    return nullptr;
+}
+
+void ArbolAVL::PreOrden(NodoAVL* nodo){
+    if(nodo != nullptr){
+        nodo->paciente->mostrar();
+        PreOrden(nodo->izquierdo);
+        PreOrden(nodo->derecho);
+    }
+}
+
+void ArbolAVL::InOrden(NodoAVL* nodo){
+    if(nodo != nullptr){
+        InOrden(nodo->izquierdo);
+        nodo->paciente->mostrar();
+        InOrden(nodo->derecho);
+    }
+}
+
+void ArbolAVL::PostOrden(NodoAVL* nodo){
+    if(nodo != nullptr){
+        PostOrden(nodo->izquierdo);
+        PostOrden(nodo->derecho);
+        nodo->paciente->mostrar();
+    }
+}
+
+void ArbolAVL::mostrarPreOrden(){
+    if(estaVacio()){
+        cout << "El arbol esta vacio." << endl;
+        return;
+    }
+    PreOrden(raiz);
+}
+
+void ArbolAVL::mostrarInOrden(){
+    if(estaVacio()){
+        cout << "El arbol esta vacio." << endl;
+        return;
+    }
+    InOrden(raiz);
+}
+
+void ArbolAVL::mostrarPostOrden(){
+    if(estaVacio()){
+        cout << "El arbol esta vacio." << endl;
+        return;
+    }
+    PostOrden(raiz);
+}
+
+bool ArbolAVL::estaVacio(){
+    return raiz == nullptr;
+}
