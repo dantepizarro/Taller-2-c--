@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include "ColaPacientes.hpp"
 #include "ListaServicios.hpp"
+#include "ArbolDesicion.hpp"
 
 
 using namespace std;
@@ -113,7 +114,8 @@ void mostrarDepartamentos(ListaServicios& listaServicios, int opcion) {
 int main() {
     ColaPacientes cola;  
     ListaServicios listaServicios; 
-    
+    ArbolDecision arbol;
+    arbol.construir();
 
     lectura(cola);        
 
@@ -135,6 +137,14 @@ int main() {
                 if (pacienteAtendido != nullptr) {
                     pacienteAtendido->mostrar();
                     
+
+                    string ruta;
+                    string servicioAsignado = arbol.evaluar(*pacienteAtendido, ruta);
+                    pacienteAtendido->setServicio(servicioAsignado);
+                    
+                    cout << "-> Ruta de decision: " << ruta << endl;
+                    cout << "-> Asignado a: " << servicioAsignado << endl;    
+
                     listaServicios.insertar(pacienteAtendido->getServicio(), pacienteAtendido); 
                     
                 } else {  
@@ -156,7 +166,9 @@ int main() {
                 cout << "8. Hospitalizacion" << endl;
                 cout << "Seleccione un departamento (1-8): ";
                 
-
+                int depOpcion;
+                cin >> depOpcion;
+                mostrarDepartamentos(listaServicios, depOpcion);
                 
                 break;
             }

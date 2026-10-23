@@ -22,6 +22,6 @@ public:
     string evaluar(const Paciente& p, string& ruta);
 
     void mostrarPreorden();
-    void mostrarInOrdern();
+    void mostrarInOrden();
     void mostrarPostOrden();
 };

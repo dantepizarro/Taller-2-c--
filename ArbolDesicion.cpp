@@ -9,19 +9,14 @@ ArbolDecision::~ArbolDecision() {
     delete raiz;
 }
 
-bool ArbolDesicion::responder(int pregunta, const Paciente& p){
+bool ArbolDecision::responder(int pregunta, const Paciente& p){
     switch(pregunta){
         case 1: return p.getEdad() < 14;
         case 2: return p.getTrauma();
         case 3: return p.getRequiereCirugia();
         case 4: return p.getSintomasNeurologicos();
-        case 5: {
-            string tipo = p.getTipoDolor();
-            for()
-            //Revisa para tipoDolor, claude tiro una wea rara
-        }
-        case 6:
-            return p.getTemperatura() >= 38.5 || p.getDolor() >= 8 || p.getPresionArterial() < 90 || p.getPresionArterial() > 180;
+        case 5: return p.getTipoDolor() == "pecho";
+        case 6: return p.getTemperatura() >= 38.5 || p.getDolor() >= 8 || p.getPresionArterial() < 90 || p.getPresionArterial() > 180;
         case 7: return p.getDiasHospitalizacion() >= 2;
 
     }
@@ -31,7 +26,7 @@ bool ArbolDesicion::responder(int pregunta, const Paciente& p){
 void ArbolDecision::construir(){
     delete raiz;
 
-    NodoDecision* hospitalizacion = new NodoDecision(7,"DiasHospitalizacion >= 2", "DiasHospitalizacion < 2", new NodoDecision("Hospitalizacoin"), new NodoDecision("Medicina General"));
+    NodoDecision* hospitalizacion = new NodoDecision(7,"DiasHospitalizacion >= 2", "DiasHospitalizacion < 2", new NodoDecision("Hospitalizacion"), new NodoDecision("Medicina General"));
 
     NodoDecision* urgencia = new NodoDecision(6, "Temperatura >= 38.5, Dolor >= 8 o Presion critica", "Temperatura < 38.5, Dolor < 8 y presion normal", new NodoDecision("Urgencias"),hospitalizacion);
 
@@ -46,7 +41,7 @@ void ArbolDecision::construir(){
     raiz = new NodoDecision(1, "Edad < 14", "Edad >= 14", new NodoDecision("Pediatria"), trauma);
 }
 
-string ArbolDecision::evaluar(const Paciente& p, string% ruta){
+string ArbolDecision::evaluar(const Paciente& p, string& ruta){
     ruta = "";
     if(raiz == nullptr){
         return "Sin Asignar";
@@ -59,7 +54,7 @@ string ArbolDecision::evaluar(const Paciente& p, string% ruta){
         }
         if(responder(actual->pregunta, p)){
             ruta += actual->textoSi;
-            actual = actual ->no;
+            actual = actual ->si;
         }else {
             ruta += actual->textoNo;
             actual = actual->no;
@@ -71,7 +66,7 @@ string ArbolDecision::evaluar(const Paciente& p, string% ruta){
     return actual->servicio;
 }
 
-void ArbolDecision::imprimirNodo(NodoDecision* nodo, int nivel){
+void ArbolDecision::ImprimirNodo(NodoDecision* nodo, int nivel){
     for(int i = 0; i < nivel; i++){
         cout << " ";
     }
@@ -84,7 +79,7 @@ void ArbolDecision::imprimirNodo(NodoDecision* nodo, int nivel){
 
 void ArbolDecision::RecorrerPreorden(NodoDecision* nodo, int nivel){
     if(nodo == nullptr) return;
-    imprimirNodo(nodo, nivel);
+    ImprimirNodo(nodo, nivel);
     RecorrerPreorden(nodo->si, nivel +1);
     RecorrerPreorden(nodo->no, nivel +1);
 }
@@ -92,15 +87,15 @@ void ArbolDecision::RecorrerPreorden(NodoDecision* nodo, int nivel){
 void ArbolDecision::RecorrerInorden(NodoDecision* nodo, int nivel){
     if(nodo == nullptr) return;
     RecorrerInorden(nodo->si, nivel + 1);
-    imprimirNodo(nodo, nivel);
+    ImprimirNodo(nodo, nivel);
     RecorrerInorden(nodo->no, nivel + 1);
 }
 
-void ArbolDecision::RecorrerPostorden(NodoDecision* nodo, int nivel){
+void ArbolDecision::RecorrerPostOrden(NodoDecision* nodo, int nivel){
     if(nodo == nullptr) return;
-    RecorrerPostorden(nodo->si, nivel + 1);
-    RecorrerPostorden(nodo->no, nivel + 1);
-    imprimirNodo(nodo,nivel);
+    RecorrerPostOrden(nodo->si, nivel + 1);
+    RecorrerPostOrden(nodo->no, nivel + 1);
+    ImprimirNodo(nodo,nivel);
 }
 
 void ArbolDecision::mostrarPreorden(){
@@ -108,12 +103,12 @@ void ArbolDecision::mostrarPreorden(){
     RecorrerPreorden(raiz, 0);
 }
 
-void ArbolDecision::mostrarInorden(){
+void ArbolDecision::mostrarInOrden(){
     cout << "Recorrido inorden" << endl;
-    RecorrerInorden(rai<,0);
+    RecorrerInorden(raiz,0);
 }
 
 void ArbolDecision::mostrarPostOrden(){
     cout << "Recorrido postorden" << endl;
-    RecorrerPostorden(raiz,0);
+    RecorrerPostOrden(raiz,0);
 }
