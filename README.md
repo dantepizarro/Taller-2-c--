@@ -52,3 +52,29 @@ Nodo 7 (Días Hospitalización >= 2):
 Sí -> Hospitalización: Casos estables pero que requieren monitoreo y pernoctar en el recinto.
 
 No -> Medicina General: Consultas de baja complejidad, sin riesgo vital y de carácter ambulatorio.
+
+Carga de pacientes desde pacientes.txt , cola de pacientes pendientes implementada con nodos y punteros, arbol de decision implementado tambien con nodos y punteros, con recorridos y ruta de decision, lista enlazada de los 8 servicios, cada uno con su propio AVL, AVL en base al ID, rotaciones simples y dobles, operaciones del AVL como insertar, buscar por ID, buscar por nombre, recorridos preorden, inorden y preorden, altura y factor de balance
+Arbol decision:
+
+Edad < 14?
+si -> Pediatria
+no -> trauma == 1?
+  si -> RequiereCirugia == 1?
+      si -> Cirugia
+      no -> Traumatologia
+  no-> SintomasNeurologicos == 1?
+      si -> Neurologia
+      no -> TipoDolor == "pecho"?
+            si -> Cardiologia
+            no -> Temperatura >= 38.5 o Dolor >= 8 o Presion < 90 o presion > 180?
+                  si -> Urgencias
+                  no -> DiasHospitalizacion >= 2?
+                        si -> Hospitalizacion
+                        no -> Medicina General
+
+Uso:
+1. Atender pacientes: atiende un paciente, el siguiente en la cola, muestra su ficha. la ruta del arbol de decision, el servicio asignado y lo inserta en el AVL de ese servicio
+2. Ver departamentos: muestra el estado de los 8 servicios
+3. Buscar pacientes: busca por ID o por nombre en los 8 AVL, al encontrarlo muestra su ficha, su departamento, y si se busco por ID, la ruta de busqueda
+
+Se decidio que la opcion 1 se atienda un solo paciente por vez
