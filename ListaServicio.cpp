@@ -43,9 +43,44 @@ NodoServicio* ListaServicios::buscarServicio(string nombre){
 void ListaServicios::insertar(string nombre, Paciente* paciente){
     NodoServicio* servicio = buscarServicio(nombre);
     if(servicio != nullptr){
-        servicio->pacientes.encolar(paciente);
+        servicio->pacientes.insertar(paciente);
     }else{
         cout << "Servicio no encontrado: " << nombre << endl;
     }
 }
 
+Paciente* ListaServicios::buscarPorID(const std::string& id, std::string& ruta) {
+    NodoServicio* actual = frente;
+    while (actual != nullptr) {
+        Paciente* paciente = actual->pacientes.buscarPorID(id, ruta);
+        if (paciente != nullptr) {
+            return paciente;
+        }
+        actual = actual->siguiente;
+    }
+    ruta = "";
+    return nullptr;
+}
+
+Paciente* ListaServicios::buscarPorNombre(const std::string& nombre) {
+    NodoServicio* actual = frente;
+    while (actual != nullptr) {
+        Paciente* paciente = actual->pacientes.buscarPorNombre(nombre);
+        if (paciente != nullptr) {
+            return paciente;
+        }
+        actual = actual->siguiente;
+    }
+    return nullptr;
+}
+
+void ListaServicios::mostrarEstado() {
+    NodoServicio* actual = frente;
+    while (actual != nullptr) {
+        cout << actual->nombre << endl;
+        cout << "Pacientes en el servicio:" << endl;
+        actual->pacientes.mostrarResumen();
+        cout << endl;
+        actual = actual->siguiente;
+    }
+}

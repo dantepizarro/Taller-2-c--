@@ -173,7 +173,27 @@ int main() {
                 break;
             }
             case 3: {
+                cout << "=== BUSCAR PACIENTE ===" << endl;
+                cout << "Indique el ID o Nombre del paciente: ";
+                string entrada;
                 
+                string ruta;
+                Paciente* encontrado = listaServicios.buscarPorID(entrada, ruta);
+                if(encontrado == nullptr){
+                    encontrado = listaServicios.buscarPorNombre(entrada);
+                }
+
+                if(encontrado != nullptr){
+                    cout << "Paciente encontrado: " << endl;
+                    encontrado->mostrar();
+                    cout << "Departamento: " << encontrado->getServicio() << endl;
+                    if(!ruta.empty()){
+                        cout << "Ruta de busqueda: " << ruta << endl;
+                    }
+                }else{
+                    cout << "Paciente no encontrado." << endl;
+                }
+                break;
             }
             case 4: {
                 cout << "Saliendo del sistema..." << endl;

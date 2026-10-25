@@ -1,3 +1,4 @@
+#pragma once
 #include "Paciente.hpp"
 
 struct NodoAVL {

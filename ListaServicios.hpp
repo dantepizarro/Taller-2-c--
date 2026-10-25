@@ -15,6 +15,7 @@ public:
     NodoServicio* buscarServicio(string nombre);
     bool estaVacia();
     int getTamano();
-    void mostrar();
-    void mostrarHistorial();
+    void mostrarEstado();
+    Paciente* buscarPorID(const std::string& id, std::string& ruta);
+    Paciente* buscarPorNombre(const std::string& nombre);
 };

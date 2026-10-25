@@ -14,6 +14,7 @@ void ArbolAVL::destruirArbol(NodoAVL* nodo) {
     if (nodo != nullptr) {
         destruirArbol(nodo->izquierdo);
         destruirArbol(nodo->derecho);
+        delete nodo->paciente;
         delete nodo;
     }
 }
@@ -115,22 +116,44 @@ void ArbolAVL::insertar(Paciente* paciente){
     raiz = insertar(raiz, paciente);
 }
 
-Paciente* ArbolAVL::buscar(std::string id){
+Paciente* ArbolAVL::buscarPorID(std::string id,std::string& ruta){
     NodoAVL* actual = raiz;
-    
+    ruta = "";
     while(actual != nullptr){
         string idActual = actual->paciente->getId();
         if(id == idActual){
+            ruta += idActual;
             return actual->paciente;
         } else if(id < idActual){
+            ruta += idActual + " -> ";
             actual = actual->izquierdo;
         } else {
+            ruta += idActual + " -> ";
             actual = actual->derecho;
         }
     }
+    ruta = "";
     return nullptr;
 }
+Paciente* ArbolAVL::buscarPorNombre(NodoAVL* nodo, const std::string nombre) {
+    if (nodo == nullptr) {
+        return nullptr;
+    }
 
+    if (nodo->paciente->getNombre() == nombre) {
+        return nodo->paciente;
+    }
+
+    Paciente* pacienteIzquierdo = buscarPorNombre(nodo->izquierdo, nombre);
+    if (pacienteIzquierdo != nullptr) {
+        return pacienteIzquierdo;
+    }
+
+    return buscarPorNombre(nodo->derecho, nombre);
+}
+Paciente* ArbolAVL::buscarPorNombre(const std::string& nombre) {
+    return buscarPorNombre(raiz, nombre);
+}
 void ArbolAVL::PreOrden(NodoAVL* nodo){
     if(nodo != nullptr){
         nodo->paciente->mostrar();
@@ -181,4 +204,48 @@ void ArbolAVL::mostrarPostOrden(){
 
 bool ArbolAVL::estaVacio(){
     return raiz == nullptr;
+}
+void ArbolAVL::mostrarAltura() {
+    if (estaVacio()) {
+        cout << "El arbol esta vacio." << endl;
+        return;
+    }
+    cout << "Altura del arbol: " << getAltura(raiz) << endl;
+}
+
+void ArbolAVL::mostrarFactorBalance() {
+    if (estaVacio()) {
+        cout << "El arbol esta vacio." << endl;
+        return;
+    }
+    mostrarBalance(raiz);
+}
+void ArbolAVL::mostrarBalance(NodoAVL* nodo) {
+    if (nodo != nullptr) {
+        mostrarBalance(nodo->izquierdo);
+        cout << "ID: " << nodo->paciente->getId() << ", Factor de balance: " << getBalance(nodo) << endl;
+        mostrarBalance(nodo->derecho);
+    }
+}
+
+void ArbolAVL::mostrarResumen() {
+    if (estaVacio()) {
+        cout << "El arbol esta vacio." << endl;
+        return;
+    }
+    cout << "Pacientes: ";
+    bool primero = true;
+    listarResumen(raiz, primero);
+    cout << endl;
+}
+void ArbolAVL::listarResumen(NodoAVL* nodo, bool& primero) {
+    if (nodo != nullptr) {
+        listarResumen(nodo->izquierdo, primero);
+        if (!primero) {
+            cout << ", ";
+        }
+        cout << nodo->paciente->getNombre() + " (" + nodo->paciente->getId() + ")";
+        primero = false;
+        listarResumen(nodo->derecho, primero);
+    }
 }

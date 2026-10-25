@@ -1,9 +1,10 @@
 #pragma once
-#include "ColaPacientes.hpp"
+#include "ArbolAVL.hpp"
+
 
 struct NodoServicio {
     string nombre;
-    ColaPacientes pacientes;
+    ArbolAVL pacientes;
     NodoServicio* siguiente;
 
     NodoServicio(string nombre) : nombre(nombre), siguiente(nullptr) {}
