@@ -105,7 +105,8 @@ void mostrarDepartamentos(ListaServicios& listaServicios, int opcion) {
     
     if (actual != nullptr) {
         cout << "Departamento: " << actual->nombre << endl;
-        actual->pacientes.mostrar();
+
+        actual->pacientes.mostrarPreOrden();
     } else {
         cout << "No se encontro el departamento seleccionado." << endl;
     }
@@ -125,7 +126,7 @@ int main() {
         cout << "\n=== HOSPITAL MARMAJA ===" << endl;
         cout << "1. Atender pacientes" << endl;
         cout << "2. Ver departamentos" << endl;
-        cout << "3. Buscar pacientes" << endl;
+        cout << "3. Buscar paciente" << endl;
         cout << "4. Salir" << endl;
         cout << "Seleccionar opcion: ";
         cin >> opcion;
@@ -137,60 +138,49 @@ int main() {
                 if (pacienteAtendido != nullptr) {
                     pacienteAtendido->mostrar();
                     
-
                     string ruta;
                     string servicioAsignado = arbol.evaluar(*pacienteAtendido, ruta);
                     pacienteAtendido->setServicio(servicioAsignado);
                     
-                    cout << "-> Ruta de decision: " << ruta << endl;
-                    cout << "-> Asignado a: " << servicioAsignado << endl;    
+                    cout << "Ruta: " << ruta << endl;
+                    cout << "Servicio asignado: " << servicioAsignado << endl;    
 
                     listaServicios.insertar(pacienteAtendido->getServicio(), pacienteAtendido); 
+                    cout << "Paciente insertado en el AVL de " << servicioAsignado << "." << endl;
                     
                 } else {  
                     cout << "No hay mas pacientes para atender." << endl;
-                    break;
                 }
+                break;
             }
-            break;
-            
             case 2: {
-                cout << "\n==== ESTADOS DE LOS DEPARTAMENTOS ===" << endl;
-                cout << "1. Urgencias" << endl;
-                cout << "2. Medicina General" << endl;
-                cout << "3. Cardiologia" << endl;
-                cout << "4. Neurologia" << endl;
-                cout << "5. Traumatologia" << endl;
-                cout << "6. Cirugia" << endl;
-                cout << "7. Pediatria" << endl;
-                cout << "8. Hospitalizacion" << endl;
-                cout << "Seleccione un departamento (1-8): ";
-                
-                int depOpcion;
-                cin >> depOpcion;
-                mostrarDepartamentos(listaServicios, depOpcion);
-                
+                listaServicios.mostrarEstado();
                 break;
             }
             case 3: {
                 cout << "=== BUSCAR PACIENTE ===" << endl;
                 cout << "Indique el ID o Nombre del paciente: ";
                 string entrada;
+                cin >> entrada;
                 
                 string ruta;
                 Paciente* encontrado = listaServicios.buscarPorID(entrada, ruta);
+                
                 if(encontrado == nullptr){
                     encontrado = listaServicios.buscarPorNombre(entrada);
                 }
 
                 if(encontrado != nullptr){
-                    cout << "Paciente encontrado: " << endl;
+                    cout << "Buscando en AVL...\nPaciente encontrado:" << endl;
                     encontrado->mostrar();
                     cout << "Departamento: " << encontrado->getServicio() << endl;
                     if(!ruta.empty()){
-                        cout << "Ruta de busqueda: " << ruta << endl;
+                        if (ruta.length() >= 4 && ruta.substr(ruta.length() - 4) == " -> ") {
+                            ruta = ruta.substr(0, ruta.length() - 4);
+                        }
+                        cout << "Ruta de busqueda:\n" << ruta << endl;
                     }
-                }else{
+                } else {
                     cout << "Paciente no encontrado." << endl;
                 }
                 break;

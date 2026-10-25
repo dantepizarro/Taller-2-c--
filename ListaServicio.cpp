@@ -75,12 +75,18 @@ Paciente* ListaServicios::buscarPorNombre(const std::string& nombre) {
 }
 
 void ListaServicios::mostrarEstado() {
+    cout << "=== ESTADO DE LOS DEPARTAMENTOS ===" << endl;
     NodoServicio* actual = frente;
     while (actual != nullptr) {
         cout << actual->nombre << endl;
-        cout << "Pacientes en el servicio:" << endl;
-        actual->pacientes.mostrarResumen();
-        cout << endl;
+        
+        if (actual->pacientes.estaVacio()) {
+            cout << "Sin pacientes\n" << endl;
+        } else {
+            actual->pacientes.mostrarResumen();
+            cout << endl; 
+        }
+        
         actual = actual->siguiente;
     }
 }
